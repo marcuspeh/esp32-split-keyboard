@@ -20,7 +20,29 @@ Split keyboard firmware written for ESP32. This makes use of `BleKeyboard` libra
 - Download the master branch and flash `ESP32-BLE-KEYBOARD.ino`.
 
 ## Notes
-Instead of having 2 ESP32 for each side, I have decided to only have one ESP32. This is mainly to simplify the project. However, this should be easily extended to have one main ESP32 and another to send keyscans to the main one using ESP-NOW.
+Instead of having 2 ESP32-C3 for each side, I have decided to only have one ESP32-C3. This is mainly to simplify the project. However, this should be easily extended to have one main ESP32 and another to send keyscans to the main one using ESP-NOW.
+
+## Battery level 
+Since the ESP32-C3 board senses up to 3.3v pin, and li-ion battery has a voltage of 3.2v - 4.2v, voltage divider is used to determine the battery level.
+
+```
+(Battery +) --------|
+                    |
+                    R1
+                    |
+                    |----------- (Pin)
+                    |
+                    R2
+                    |
+(Battery -) --------|----------- (GND)
+
+                                  R2
+Value at pin = Battery Volts x ----------
+                                R1 + R2
+```
+Based on how the voltage divider works, to caclualte the actual battery level, we will need to multiply the voltage read by the pin with
+(R1 + R2) / R2.
+
 
 ## Credits
 
