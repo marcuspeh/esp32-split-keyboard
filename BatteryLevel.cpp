@@ -1,7 +1,4 @@
-#include <Arduino.h>
-
 #include "BatteryLevel.h"
-#include "Constants.h"
 
 void  BatteryLevel::begin() {
     pinMode(PIN_BATTERY_LEVEL, INPUT);
@@ -31,9 +28,9 @@ bool BatteryLevel:: shouldUpdateBatteryLevel() {
     // Time will overflow back to 0 around every 50 days. Doesn't really matter here since
     // the keyboard is not going to be switched on for that long.
     unsinged long currTime = millis();
-    if (currTime < prevTime + BATTERY_SCAN_INTERVAL_MS) {
+    if (currTime >= nextScanTime) { 
+        nextScanTime = currTime + BATTERY_SCAN_INTERVAL_MS;
         return false;
     }
-    prevTime = currTime;
     return true;
 }

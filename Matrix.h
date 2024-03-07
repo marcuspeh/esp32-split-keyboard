@@ -1,9 +1,11 @@
 #include <Arduino.h>
+#include <bitset>
 
 #include "BleKeyboard.h"
 #include "Constants.h"
 
 class Matrix {
+    bitset<NUM_ROWS * NUM_COLS> isPressed;
     short rows[NUMS_ROW] = {
         PIN_ROW_1,
         PIN_ROW_2,
@@ -40,6 +42,7 @@ class Matrix {
         },
     }
 
+    int getBitsetIndex(int row, int col);
 public:
     void begin();
     void keyScan(BleKeyboard& bleKeyboard);
