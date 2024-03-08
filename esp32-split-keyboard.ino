@@ -1,3 +1,4 @@
+#include "BatteryLevel.h"
 #include "BleKeyboard.h"
 #include "Constants.h"
 #include "Matrix.h"
@@ -19,9 +20,8 @@ void loop() {
   }
   
   if (batteryLevel.shouldUpdateBatteryLevel()) { 
-    float batteryLevel = caclulateBatteryLevel();
-    bleKeyboard.setBatteryLevel(batteryLevel);
-    prevTime = currTime;
+    float percentage = batteryLevel.caclulateBatteryLevel();
+    bleKeyboard.setBatteryLevel(percentage);
   }
 
   matrix.keyScan(bleKeyboard);

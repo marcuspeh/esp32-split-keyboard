@@ -26,7 +26,6 @@ void Matrix::keyScan(BleKeyboard& bleKeyboard) {
         }
         digitalWrite(cols[i], LOW);
     }
-    bleKeyboard.release();
 }
 
 
