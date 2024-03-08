@@ -1,4 +1,5 @@
 #include "BatteryLevel.h"
+#include "BleConnectionManager.h"
 #include "BleKeyboard.h"
 #include "Constants.h"
 #include "Matrix.h"

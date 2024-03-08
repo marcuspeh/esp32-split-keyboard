@@ -1,3 +1,6 @@
+// Max devices that the keyboard can connect to
+#define MAX_DEVICES 3
+
 // Pin for battery power level
 #define PIN_BATTERY_LEVEL 13
 
@@ -33,3 +36,4 @@
 // Matrix details
 #define NUM_ROWS 5
 #define NUM_COLS 9
+
