@@ -43,6 +43,9 @@ Value at pin = Battery Volts x ----------
 Based on how the voltage divider works, to caclualte the actual battery level, we will need to multiply the voltage read by the pin with
 (R1 + R2) / R2.
 
+## Tools used
+* [keyboard layout](http://www.keyboard-layout-editor.com/)
+* [keyboard plate](https://kbplate.ai03.com/)
 
 ## Credits
 

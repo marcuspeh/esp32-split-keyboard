@@ -32,14 +32,17 @@
 #define PIN_COL_4 4
 #define PIN_COL_5 5
 #define PIN_COL_6 6
-#define PIN_COL_7 7
-#define PIN_COL_8 8
-#define PIN_COL_9 9
 
 // Matrix details
 #define NUM_ROWS 5
-#define NUM_COLS 9
+#define NUM_COLS 6
 
 // Layer key
-#define LAYER_KEY_ROW 0
-#define LAYER_KEY_COL 0
+#define NUM_LAYERS 2
+#define LAYER_KEY_ROW 5
+#define LAYER_KEY_COL 6
+
+// Special key
+#define SPECIAL_KEY_ROW 5
+#define SPECIAL_KEY_COL 5
+
