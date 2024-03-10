@@ -2,6 +2,7 @@
 #include "Matrix.h"
 
 void Matrix::begin() {
+    currentLayer = Layer::layer1;
     for (short row: rows) {
         pinMode(row, OUTPUT);
     }
@@ -17,28 +18,13 @@ bool Matrix::isLayerKeyPressed() {
     return val == HIGH;
 }
 
-void Matrix::scanLayer2(BleKeyboard& bleKeyboard) {
-    if (!isLayerKeyPressedPreviously) {
+void Matrix::scanMatrix(BleKeyboard& bleKeyboard, Layer layer) {
+    if (currentLayer != layer) {
         bleKeyboard.releaseAll();
         isPressed.reset();
-        isLayerKeyPressedPreviously = true;
+        currentLayer = layer;
     }
 
-    scanMatrix(bleKeyboard, 1);
-}
-
-void Matrix::scanLayer1(BleKeyboard& bleKeyboard) {
-    if (isLayerKeyPressedPreviously) {
-        bleKeyboard.releaseAll();
-        isPressed.reset();
-        isLayerKeyPressedPreviously = false;
-    }
-    
-    scanMatrix(bleKeyboard, 0);
-}
-
-
-void Matrix::scanMatrix(BleKeyboard& bleKeyboard, int layer) {
     for (int i = 0; i < NUM_ROWS; i++) {
         digitalWrite(rows[i], HIGH);
         for (int j = 0; j < NUM_COLS; j++) {
@@ -59,11 +45,11 @@ void Matrix::scanMatrix(BleKeyboard& bleKeyboard, int layer) {
 }
 
 
-void Matrix::pressKey(BleKeyboard& bleKeyboard, int layer, int row, int col, int bitsetIndex) {
+void Matrix::pressKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, int bitsetIndex) {
     isPressed[bitsetIndex] = true;
 
     // Devices switching
-    if (layer == 2) {
+    if (layer == Layer::layer2) {
         switch (layerKeys[layer][row][col]) {
             case 0:
             case 1:
@@ -78,11 +64,11 @@ void Matrix::pressKey(BleKeyboard& bleKeyboard, int layer, int row, int col, int
     bleKeyboard.press(layerKeys[layer][row][col]);
 }
 
-void Matrix::releaseKey(BleKeyboard& bleKeyboard, int layer, int row, int col, int bitsetIndex) {
+void Matrix::releaseKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, int bitsetIndex) {
     isPressed[bitsetIndex] = false;
 
     // Devices switching
-    if (layer == 2) {
+    if (layer == Layer::layer2) {
         switch (layerKeys[layer][row][col]) {
             case 0:
             case 1:
@@ -98,10 +84,10 @@ void Matrix::releaseKey(BleKeyboard& bleKeyboard, int layer, int row, int col, i
 
 void Matrix::keyScan(BleKeyboard& bleKeyboard) {
     if (isLayerKeyPressed()) {
-        scanLayer2(bleKeyboard);
+        scanMatrix(bleKeyboard, Layer::layer2);
         return;
     }
-    scanLayer1(bleKeyboard);
+    scanMatrix(bleKeyboard, Layer::layer1);
 }
 
 

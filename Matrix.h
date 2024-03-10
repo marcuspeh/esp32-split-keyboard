@@ -4,9 +4,15 @@
 #include "BleKeyboard.h"
 #include "Constants.h"
 
+enum Layer{   
+    layer1 = 0,
+    layer2 = 1,
+};
+
 class Matrix {
     std::bitset<NUM_ROWS * NUM_COLS> isPressed;
-    bool isLayerKeyPressedPreviously = false;
+    Layer currentLayer;
+
     short rows[NUM_ROWS] = {
         PIN_ROW_1,
         PIN_ROW_2,
@@ -22,6 +28,7 @@ class Matrix {
         PIN_COL_5,
         PIN_COL_6,
     };
+
     int layerKeys[NUM_LAYERS][NUM_ROWS][NUM_COLS] = {
         {
             {
@@ -62,11 +69,9 @@ class Matrix {
 
     int getBitsetIndex(int row, int col);
     bool isLayerKeyPressed();
-    void scanLayer1(BleKeyboard& bleKeyboard);
-    void scanLayer2(BleKeyboard& bleKeyboard);
-    void scanMatrix(BleKeyboard& bleKeyboard, int layer);
-    void pressKey(BleKeyboard& bleKeyboard, int layer, int row, int col, int bitsetIndex);
-    void releaseKey(BleKeyboard& bleKeyboard, int layer, int row, int col, int bitsetIndex);
+    void scanMatrix(BleKeyboard& bleKeyboard, Layer layer);
+    void pressKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, int bitsetIndex);
+    void releaseKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, int bitsetIndex);
 public:
     void begin();
     void keyScan(BleKeyboard& bleKeyboard);
