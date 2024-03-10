@@ -6,6 +6,7 @@
 
 class Matrix {
     std::bitset<NUM_ROWS * NUM_COLS> isPressed;
+    bool isLayerKeyPressedPreviously = false;
     short rows[NUM_ROWS] = {
         PIN_ROW_1,
         PIN_ROW_2,
@@ -38,11 +39,17 @@ class Matrix {
             KEY_F7, KEY_F8, KEY_LEFT_SHIFT, 'z', 'x', 'c', 'v', 'b', ' ',
         },
         {
-            KEY_F9, KEY_F10, KEY_LEFT_CTRL, KEY_LEFT_GUI, KEY_LEFT_ALT, KEY_HOME, ' ', ' ', ' ',
+            KEY_F9, KEY_F10, KEY_LEFT_CTRL, KEY_LEFT_GUI, KEY_LEFT_ALT, ' ', ' ', ' ', ' ',
         },
     };
+    int layerKeys[][] = {
+        {1, 4, DEVICE1}, {1, 5, DEVICE2}, {1, 6, DEVICE3}, // for changing device
+    }
 
     int getBitsetIndex(int row, int col);
+    bool isLayerKeyPressed();
+    void scanLayer0(BleKeyboard& bleKeyboard);
+    void scanLayer1(BleKeyboard& bleKeyboard);
 public:
     void begin();
     void keyScan(BleKeyboard& bleKeyboard);

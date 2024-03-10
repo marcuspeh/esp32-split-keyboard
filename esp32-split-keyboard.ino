@@ -9,6 +9,8 @@ BatteryLevel batteryLevel;
 Matrix matrix;
 
 void setup() {
+  BleConnectionManager::begin();
+
   batteryLevel.begin();
   bleKeyboard.begin();
   matrix.begin();

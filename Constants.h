@@ -1,5 +1,8 @@
 // Max devices that the keyboard can connect to
 #define MAX_DEVICES 3
+#define DEVICE1 0
+#define DEVICE2 1
+#define DEVICE3 2
 
 // Pin for battery power level
 #define PIN_BATTERY_LEVEL 13
@@ -37,3 +40,6 @@
 #define NUM_ROWS 5
 #define NUM_COLS 9
 
+// Layer key
+#define LAYER_KEY_ROW 0
+#define LAYER_KEY_COL 0
