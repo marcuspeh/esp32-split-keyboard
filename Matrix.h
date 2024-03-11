@@ -13,6 +13,7 @@ class Matrix {
     std::bitset<NUM_ROWS * NUM_COLS> isPressed;
     Layer currentLayer;
 
+    // Pins in rows need to be RTC GPIO to wakeup device.
     short rows[NUM_ROWS] = {
         PIN_ROW_1,
         PIN_ROW_2,
@@ -72,7 +73,10 @@ class Matrix {
     void scanMatrix(BleKeyboard& bleKeyboard, Layer layer);
     void pressKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, int bitsetIndex);
     void releaseKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, int bitsetIndex);
+    static void callback();
 public:
     void begin();
     void keyScan(BleKeyboard& bleKeyboard);
+    void sleep();
+    void wakeup();
 };

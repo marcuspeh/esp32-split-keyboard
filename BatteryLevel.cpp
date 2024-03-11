@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include "BatteryLevel.h"
 
 void  BatteryLevel::begin() {
