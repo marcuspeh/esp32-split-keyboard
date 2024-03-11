@@ -54,7 +54,7 @@ void Matrix::pressKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, i
             case 0:
             case 1:
             case 2:
-                BleConnectionManager::changeID(layerKeys[layer][row][col]);
+                BleConnectionManager::getBleConnectionManager()->changeID(layerKeys[layer][row][col]);
                 return;
             default:
                 break;

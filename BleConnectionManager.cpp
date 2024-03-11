@@ -19,3 +19,12 @@ void BleConnectionManager::changeID(int deviceNumber) {
     esp_sleep_enable_timer_wakeup(1);
     esp_deep_sleep_start(); 
 }
+
+BleConnectionManager* BleConnectionManager::getBleConnectionManager() {
+  if (bleConnectionManager == nullptr) {
+    bleConnectionManager = new BleConnectionManager();
+  }
+  return bleConnectionManager;
+}
+
+BleConnectionManager* BleConnectionManager::bleConnectionManager= nullptr;;
