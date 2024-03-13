@@ -1,6 +1,7 @@
 #include "BatteryLevel.h"
 #include "BleConnectionManager.h"
 #include "BleKeyboard.h"
+#include "SleepManager.h"
 #include "Constants.h"
 #include "Matrix.h"
 
@@ -10,6 +11,7 @@ Matrix matrix;
 
 void setup() {
   BleConnectionManager::getInstance()->begin();
+  SleepManager::getInstance()->begin();
 
   batteryLevel.begin();
   bleKeyboard.begin();

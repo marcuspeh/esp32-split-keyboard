@@ -3,6 +3,10 @@
 #include "BleConnectionManager.h"
 #include "Matrix.h"
 
+Matrix::Matrix() {
+    sleepManager = SleepManager::getInstance();
+}
+
 void Matrix::begin() {
     currentLayer = Layer::layer1;
     for (short row: rows) {
@@ -37,6 +41,7 @@ void Matrix::scanMatrix(BleKeyboard& bleKeyboard, Layer layer) {
             int val = digitalRead(cols[j]);
             int bitsetIndex = getBitsetIndex(i, j);
             if (val == HIGH && !isPressed[bitsetIndex]) {
+                sleepManager->updatePress();
                 pressKey(bleKeyboard, layer, i, j, bitsetIndex);
             } else if (val == LOW && isPressed[bitsetIndex]) {
                 releaseKey(bleKeyboard, layer, i, j, bitsetIndex);

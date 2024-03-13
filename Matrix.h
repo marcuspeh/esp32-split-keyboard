@@ -1,7 +1,11 @@
+#pragma once
+
 #include <Arduino.h>
 #include <bitset>
 
 #include "BleKeyboard.h"
+#include "SleepManager.h"
+#include "Sleeper.h"
 #include "Constants.h"
 
 enum Layer{   
@@ -9,9 +13,11 @@ enum Layer{
     layer2 = 1,
 };
 
-class Matrix {
+class Matrix: public Sleeper{
     std::bitset<NUM_ROWS * NUM_COLS> isPressed;
     Layer currentLayer;
+    SleepManager* sleepManager;
+
 
     // Pins in rows need to be RTC GPIO to wakeup device.
     short rows[NUM_ROWS] = {
@@ -75,6 +81,7 @@ class Matrix {
     void releaseKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, int bitsetIndex);
     static void callback();
 public:
+    Matrix();
     void begin();
     void keyScan(BleKeyboard& bleKeyboard);
     void sleep();

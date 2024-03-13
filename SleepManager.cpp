@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include "SleepManager.h"
  
+SleepManager* SleepManager::instance = nullptr;;
 SleepManager* SleepManager::getInstance() {
     if (instance == nullptr) {
         instance = new SleepManager();
@@ -18,20 +19,20 @@ void SleepManager::updatePress() {
     lastPressed = millis();
 }
 
-void SleepManager::attemptToSleep(Matrix& matrix) { 
+void SleepManager::attemptToSleep(Sleeper& sleeper) { 
     if (millis() < lastPressed + SLEEP_TIMEOUT_MS) {
         return;
     }
 
-    matrix.sleep();
+    sleeper.sleep();
 
     esp_sleep_enable_touchpad_wakeup();
     esp_light_sleep_start();
 
-    wakeup(matrix);
+    wakeup(sleeper);
 }
 
-void SleepManager::wakeup(Matrix& matrix) {
+void SleepManager::wakeup(Sleeper& sleeper) {
     lastPressed = millis();
-    matrix.wakeup();
+    sleeper.wakeup();
 }
