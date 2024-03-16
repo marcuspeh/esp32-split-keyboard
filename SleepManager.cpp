@@ -3,14 +3,6 @@
 #include "Constants.h"
 #include "SleepManager.h"
  
-SleepManager* SleepManager::instance = nullptr;;
-SleepManager* SleepManager::getInstance() {
-    if (instance == nullptr) {
-        instance = new SleepManager();
-    }
-    return instance;
-}
-
 void SleepManager::begin() {
     lastPressed = 0;
 }

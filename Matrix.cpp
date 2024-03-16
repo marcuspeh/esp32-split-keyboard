@@ -3,9 +3,6 @@
 #include "BleConnectionManager.h"
 #include "Matrix.h"
 
-Matrix::Matrix() {
-    sleepManager = SleepManager::getInstance();
-}
 
 void Matrix::begin() {
     currentLayer = Layer::layer1;
@@ -61,7 +58,7 @@ void Matrix::pressKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, i
             case 0:
             case 1:
             case 2:
-                BleConnectionManager::getInstance()->changeID(layerKeys[layer][row][col]);
+                bleConnectionManager->changeID(layerKeys[layer][row][col]);
                 return;
             default:
                 break;
@@ -120,3 +117,11 @@ void Matrix::callback(){
     // callback stuff
     // Serial.println("In touch callback");
 };
+
+void Matrix::setBleConnectionManager(BleConnectionManager* bleConnectionManager) {
+    this->bleConnectionManager = bleConnectionManager;
+}
+
+void Matrix::setSleepManager(SleepManager* sleepManager) {
+    this->sleepManager = sleepManager;
+}

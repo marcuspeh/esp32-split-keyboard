@@ -10,12 +10,18 @@ BatteryLevel batteryLevel;
 Matrix matrix;
 
 void setup() {
-  BleConnectionManager::getInstance()->begin();
-  SleepManager::getInstance()->begin();
+  BleConnectionManager* bleConnectionManager = new BleConnectionManager();
+  SleepManager* sleepManager = new SleepManager();
 
+  sleepManager->begin();
+  bleConnectionManager->begin();
   batteryLevel.begin();
   bleKeyboard.begin();
   matrix.begin();
+
+  // Injet dependencies
+  matrix.setBleConnectionManager(bleConnectionManager);
+  matrix.setSleepManager(sleepManager);
 }
 
 void loop() {
