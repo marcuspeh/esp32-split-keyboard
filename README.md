@@ -43,6 +43,11 @@ Value at pin = Battery Volts x ----------
 Based on how the voltage divider works, to caclualte the actual battery level, we will need to multiply the voltage read by the pin with
 (R1 + R2) / R2.
 
+## Inactive
+ESP32-C3 will keep track of the time of the last key input and make use of that to calculate when the keyboard will go into light sleep. The time till light sleep can be updated in `constants.h` file.
+
+Since ESP32-C3 is able to use any GPIO pin to wake up from light sleep, we will be checking if the columns pinout are HIGH (ie pressed).
+
 ## Tools used
 * [keyboard layout](http://www.keyboard-layout-editor.com/)
 * [keyboard plate](https://kbplate.ai03.com/)
