@@ -10,7 +10,6 @@ class BleConnectionManager {
     };
 
 public:
-    BleConnectionManager() {};
     void begin();
     void changeID(int deviceNumber);
 };

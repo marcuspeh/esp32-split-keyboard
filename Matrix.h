@@ -5,8 +5,6 @@
 
 #include "BleKeyboard.h"
 #include "BleConnectionManager.h"
-#include "SleepManager.h"
-#include "Sleeper.h"
 #include "Constants.h"
 
 enum Layer{   
@@ -14,11 +12,10 @@ enum Layer{
     layer2 = 1,
 };
 
-class Matrix: public Sleeper{
+class Matrix {
     std::bitset<NUM_ROWS * NUM_COLS> isPressed;
     Layer currentLayer;
 
-    SleepManager* sleepManager;
     BleConnectionManager* bleConnectionManager;
 
 
@@ -84,11 +81,7 @@ class Matrix: public Sleeper{
     void releaseKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, int bitsetIndex);
     static void callback();
 public:
-    Matrix() {};
     void setBleConnectionManager(BleConnectionManager* bleConnectionManager);
-    void setSleepManager(SleepManager* sleepManager);
     void begin();
     void keyScan(BleKeyboard& bleKeyboard);
-    void sleep();
-    void wakeup();
 };

@@ -38,7 +38,6 @@ void Matrix::scanMatrix(BleKeyboard& bleKeyboard, Layer layer) {
             int val = digitalRead(cols[j]);
             int bitsetIndex = getBitsetIndex(i, j);
             if (val == HIGH && !isPressed[bitsetIndex]) {
-                sleepManager->updatePress();
                 pressKey(bleKeyboard, layer, i, j, bitsetIndex);
             } else if (val == LOW && isPressed[bitsetIndex]) {
                 releaseKey(bleKeyboard, layer, i, j, bitsetIndex);
@@ -99,29 +98,6 @@ int Matrix::getBitsetIndex(int row, int col) {
     return row * NUM_COLS + col;
 }
 
-void Matrix::sleep() {
-  uint8_t threshold = 1;
-  for (auto pin : rows) {
-    // pinMode(pin, OUTPUT);
-    touchAttachInterrupt(pin, callback, threshold);
-  }
-}
-
-void Matrix::wakeup() {
-  for (auto pin : rows) {
-    detachInterrupt(digitalPinToInterrupt(pin));
-  }
-}
-
-void Matrix::callback(){
-    // callback stuff
-    // Serial.println("In touch callback");
-};
-
 void Matrix::setBleConnectionManager(BleConnectionManager* bleConnectionManager) {
     this->bleConnectionManager = bleConnectionManager;
-}
-
-void Matrix::setSleepManager(SleepManager* sleepManager) {
-    this->sleepManager = sleepManager;
 }

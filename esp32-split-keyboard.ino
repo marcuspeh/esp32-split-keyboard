@@ -1,7 +1,6 @@
 #include "BatteryLevel.h"
 #include "BleConnectionManager.h"
 #include "BleKeyboard.h"
-#include "SleepManager.h"
 #include "Constants.h"
 #include "Matrix.h"
 
@@ -11,9 +10,7 @@ Matrix matrix;
 
 void setup() {
   BleConnectionManager* bleConnectionManager = new BleConnectionManager();
-  SleepManager* sleepManager = new SleepManager();
 
-  sleepManager->begin();
   bleConnectionManager->begin();
   batteryLevel.begin();
   bleKeyboard.begin();
@@ -21,7 +18,6 @@ void setup() {
 
   // Injet dependencies
   matrix.setBleConnectionManager(bleConnectionManager);
-  matrix.setSleepManager(sleepManager);
 }
 
 void loop() {

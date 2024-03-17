@@ -45,6 +45,3 @@
 // Special key
 #define SPECIAL_KEY_ROW 5
 #define SPECIAL_KEY_COL 5
-
-// Sleep timeout
-#define SLEEP_TIMEOUT_MS 600000
