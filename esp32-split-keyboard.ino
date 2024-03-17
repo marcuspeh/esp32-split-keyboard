@@ -18,6 +18,7 @@ void setup() {
 
   // Injet dependencies
   matrix.setBleConnectionManager(bleConnectionManager);
+  matrix.setBleKeyboard(&bleKeyboard);
 }
 
 void loop() {
@@ -31,5 +32,5 @@ void loop() {
     bleKeyboard.setBatteryLevel(percentage);
   }
 
-  matrix.keyScan(bleKeyboard);
+  matrix.keyScan();
 }

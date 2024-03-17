@@ -5,7 +5,7 @@
 
 
 void Matrix::begin() {
-    currentLayer = Layer::layer1;
+    layer = Layer::layer1;
     for (short row: rows) {
         pinMode(row, OUTPUT);
     }
@@ -21,13 +21,7 @@ bool Matrix::isLayerKeyPressed() {
     return val == HIGH;
 }
 
-void Matrix::scanMatrix(BleKeyboard& bleKeyboard, Layer layer) {
-    if (currentLayer != layer) {
-        bleKeyboard.releaseAll();
-        isPressed.reset();
-        currentLayer = layer;
-    }
-
+void Matrix::scanMatrix() {
     for (int i = 0; i < NUM_ROWS; i++) {
         digitalWrite(rows[i], HIGH);
         for (int j = 0; j < NUM_COLS; j++) {
@@ -38,9 +32,9 @@ void Matrix::scanMatrix(BleKeyboard& bleKeyboard, Layer layer) {
             int val = digitalRead(cols[j]);
             int bitsetIndex = getBitsetIndex(i, j);
             if (val == HIGH && !isPressed[bitsetIndex]) {
-                pressKey(bleKeyboard, layer, i, j, bitsetIndex);
+                pressKey(i, j, bitsetIndex);
             } else if (val == LOW && isPressed[bitsetIndex]) {
-                releaseKey(bleKeyboard, layer, i, j, bitsetIndex);
+                releaseKey(i, j, bitsetIndex);
             }
         }
         digitalWrite(cols[i], LOW);
@@ -48,7 +42,7 @@ void Matrix::scanMatrix(BleKeyboard& bleKeyboard, Layer layer) {
 }
 
 
-void Matrix::pressKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, int bitsetIndex) {
+void Matrix::pressKey(int row, int col, int bitsetIndex) {
     isPressed[bitsetIndex] = true;
 
     // Devices switching
@@ -64,10 +58,10 @@ void Matrix::pressKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, i
         }
     }
 
-    bleKeyboard.press(layerKeys[layer][row][col]);
+    bleKeyboard->press(layerKeys[layer][row][col]);
 }
 
-void Matrix::releaseKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col, int bitsetIndex) {
+void Matrix::releaseKey(int row, int col, int bitsetIndex) {
     isPressed[bitsetIndex] = false;
 
     // Devices switching
@@ -82,17 +76,13 @@ void Matrix::releaseKey(BleKeyboard& bleKeyboard, Layer layer, int row, int col,
         }
     }
 
-    bleKeyboard.release(layerKeys[layer][row][col]);
+    bleKeyboard->release(layerKeys[layer][row][col]);
 }
 
-void Matrix::keyScan(BleKeyboard& bleKeyboard) {
-    if (isLayerKeyPressed()) {
-        scanMatrix(bleKeyboard, Layer::layer2);
-        return;
-    }
-    scanMatrix(bleKeyboard, Layer::layer1);
+void Matrix::keyScan() {
+    setLayer(isLayerKeyPressed() ? Layer::layer2 : Layer::layer1);
+    scanMatrix();
 }
-
 
 int Matrix::getBitsetIndex(int row, int col) {
     return row * NUM_COLS + col;
@@ -100,4 +90,18 @@ int Matrix::getBitsetIndex(int row, int col) {
 
 void Matrix::setBleConnectionManager(BleConnectionManager* bleConnectionManager) {
     this->bleConnectionManager = bleConnectionManager;
+}
+
+void Matrix::setLayer(Layer layer) {
+    if (layer == this->layer) {
+        return;
+    }
+
+    bleKeyboard->releaseAll();
+    isPressed.reset();
+    this->layer = layer;
+}
+
+void Matrix::setBleKeyboard(BleKeyboard* bleKeyboard) {
+  this->bleKeyboard = bleKeyboard;
 }
