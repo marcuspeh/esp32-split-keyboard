@@ -3,6 +3,7 @@
 #include "Constants.h"
 
 class BatteryLevel {
+protected:
     unsigned long nextScanTime = 0;
 
     float caclulateBatteryVoltage(int anologReadin);

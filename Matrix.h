@@ -13,11 +13,11 @@ enum Layer{
 };
 
 class Matrix {
+  protected:
     std::bitset<NUM_ROWS * NUM_COLS> isPressed;
     Layer layer;
     BleConnectionManager* bleConnectionManager;
     BleKeyboard* bleKeyboard;
-
 
     // Pins in rows need to be RTC GPIO to wakeup device.
     short rows[NUM_ROWS] = {
@@ -77,9 +77,9 @@ class Matrix {
     int getBitsetIndex(int row, int col);
     bool isLayerKeyPressed();
     void scanMatrix();
-    void pressKey(int row, int col, int bitsetIndex);
-    void releaseKey(int row, int col, int bitsetIndex);
-    static void callback();
+    virtual void pressKey(int row, int col, int bitsetIndex) = 0;
+    virtual void releaseKey(int row, int col, int bitsetIndex) = 0;
+
 public:
     void setBleConnectionManager(BleConnectionManager* bleConnectionManager);
     void setBleKeyboard(BleKeyboard* bleKeyboard);

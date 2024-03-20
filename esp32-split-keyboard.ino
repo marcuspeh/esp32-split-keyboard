@@ -2,11 +2,11 @@
 #include "BleConnectionManager.h"
 #include "BleKeyboard.h"
 #include "Constants.h"
-#include "Matrix.h"
+#include "MainMatrix.h"
 
 BleKeyboard bleKeyboard;
 BatteryLevel batteryLevel;
-Matrix matrix;
+MainMatrix matrix;
 
 void setup() {
   BleConnectionManager* bleConnectionManager = new BleConnectionManager();
