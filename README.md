@@ -50,6 +50,9 @@ Since ESP32-C3 is able to use any GPIO pin to wake up from light sleep, we will 
 
 Due to the complexity of syncing both sides of the boards and waking the other side up, I have removed the sleep feature to keep the project simple.
 
+## Layering
+There will be 2 layers supported for the keyboard and changing of the keyboard will be based on the pressing of the layer key. Layer key will need to be pressed down to access the second key. Each layer key will only control its own side.
+
 ## Tools used
 * [keyboard layout](http://www.keyboard-layout-editor.com/)
 * [keyboard plate](https://kbplate.ai03.com/)

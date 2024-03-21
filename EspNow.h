@@ -1,0 +1,11 @@
+#pragma once
+
+#include "EspNowMessage.h"
+
+class EspNow {
+protected:
+    uint8_t senderMac[6] {0x30, 0xAE, 0xA4, 0x07, 0x0D, 0x64};
+    uint8_t receiverMac[6] {0x32, 0xAE, 0xA4, 0x07, 0x0D, 0x66};
+public:
+    virtual void begin() = 0;
+};

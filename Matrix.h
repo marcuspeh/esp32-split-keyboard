@@ -6,11 +6,7 @@
 #include "BleKeyboard.h"
 #include "BleConnectionManager.h"
 #include "Constants.h"
-
-enum Layer{   
-    layer1 = 0,
-    layer2 = 1,
-};
+#include "LayerEnum.h"
 
 class Matrix {
   protected:
